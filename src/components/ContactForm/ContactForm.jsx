@@ -28,7 +28,6 @@ export default function ContactForm() {
   const nameId = useId();
   const numberId = useId();
   const handleSubmit = (values, actions) => {
-    console.log(values);
     handleAddContact({
       id: Date.now(),
       name: values.name,
