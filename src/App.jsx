@@ -1,41 +1,35 @@
 import ContactList from "./components/ContactList/ContactList";
-import initialContact from "./ContactList.json";
+import initialContacts from "./ContactList.json";
 import SearchBox from "./components/SearchBox/SearchBox";
 import ContactForm from "./components/ContactForm/ContactForm";
-import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addContact, selectContacts } from "./redux/contactsSlice";
+import { useEffect } from "react";
+import { selectNameFilter } from "./redux/filtersSlice";
 
 export default function App() {
-  const [contact, setContact] = useState(() => {
-    const savedContacts = localStorage.getItem("contacts");
-    return savedContacts ? JSON.parse(savedContacts) : initialContact;
-  });
-  const [search, setSearch] = useState("");
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contact));
-  }, [contact]);
-  const addContact = (newContact) => {
-    setContact((prevContacts) => {
-      return [...prevContacts, newContact];
-    });
-  };
-  const daleteContact = (contactId) => {
-    setContact((prevContacts) => {
-      const updatedContacts = prevContacts.filter(
-        (contact) => contact.id !== contactId
-      );
-      localStorage.setItem("contacts", JSON.stringify(updatedContacts));
-      return updatedContacts;
-    });
-  };
-  const visibleContacts = contact.filter((contact) =>
-    contact.name.toLowerCase().includes(search.toLowerCase())
-  );
+  // const dispatch = useDispatch();
+  // const filter = useSelector(selectNameFilter);
+
+  // const contacts = useSelector(selectContacts);
+
+  // useEffect(() => {
+  //   if (contacts.length === 0) {
+  //     initialContacts.forEach((contact) => {
+  //       dispatch(addContact(contact));
+  //     });
+  //   }
+  // }, [dispatch, contacts.length]);
+
+  // const filteredContacts = contacts.filter((contact) =>
+  //   contact.name.includes(filter)
+  // );
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm onAdd={addContact} />
-      <SearchBox value={search} onSearch={setSearch} />
-      <ContactList arrContacts={visibleContacts} onDelete={daleteContact} />
+      <ContactForm />
+      <SearchBox />
+      <ContactList />
     </div>
   );
 }

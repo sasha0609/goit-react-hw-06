@@ -2,8 +2,14 @@ import css from "./ContactForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useId } from "react";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/contactsSlice";
 
-export default function ContactForm({ onAdd }) {
+export default function ContactForm() {
+  const dispatch = useDispatch();
+  const handleAddContact = (newContact) => {
+    dispatch(addContact(newContact));
+  };
   const initialValues = {
     name: "",
     number: "",
@@ -23,7 +29,7 @@ export default function ContactForm({ onAdd }) {
   const numberId = useId();
   const handleSubmit = (values, actions) => {
     console.log(values);
-    onAdd({
+    handleAddContact({
       id: Date.now(),
       name: values.name,
       number: values.number,

@@ -1,12 +1,17 @@
-export default function Contact({
-  arrContact: { id, name, number },
-  onDelete,
-}) {
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contactsSlice";
+
+export default function Contact({ id, name, number }) {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
+  };
   return (
     <div>
       <p>{name}</p>
       <p>{number}</p>
-      <button onClick={() => onDelete(id)}>Delete</button>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 }
